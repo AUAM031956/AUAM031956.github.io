@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>終極密碼</title>
+
+    <style>
+        *
+        {
+            margin: 0;
+            padding: 0;
+        }
+        .box
+        {
+            width: 50%;
+            padding: 20px;
+            background-attachment: #fff;
+            margin: auto;
+            margin-top: 25px;
+            border: 1px solid #000;
+        }
+        .box h1
+        {
+            text-align: center;
+        }
+        .random
+        {
+            width: 180px;
+            display: block;
+            margin: auto;
+            font-size: 30px;
+            color:#fff;
+            margin-top: 10%;
+            border: 1px solid #000;
+            background-color: cornflowerblue;
+            text-align: center;
+            cursor: pointer;
+            text-align: center;
+        }
+        .input
+        {
+            display: block;
+            margin: auto;
+            margin-top: 1px;
+            width: 250px;
+            height: 30px;
+            border: 1px solid #000;
+            font-size: 20px;
+            text-align: center;
+        }
+        .num_button
+        {
+            display: flex;
+            flex-wrap: wrap;
+            width: 120px;
+            margin: auto;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        .number,.sent,.delet
+        {
+            width: 36px;
+            height: 36px;
+            padding: 4px;
+            background-color: #000;
+            color:#fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+    <h1 class="range">0~100</h1>
+    </div>
+    
+    <!-- 隨機產生 -->
+    <button class="random" type="button">產生數字</button>
+    <!-- 使用者輸入數字 -->
+    <div class="input"></div>
+
+    <!-- 數字按鍵 -->
+    <div class="num_button">
+            <button class="number" >1</button>
+            <button class="number" >2</button>
+            <button class="number" >3</button>
+            <button class="number" >4</button>
+            <button class="number" >5</button>
+            <button class="number" >6</button>
+            <button class="number" >7</button>
+            <button class="number" >8</button>
+            <button class="number" >9</button>
+            <button class="delet"  style="color:red">X</button>
+            <button class="number" >0</button>
+            <button class="sent"  style="color:green">V</button>
+    </div>
+    <script>
+        let random_num, max = 100, min = 0;
+        
+        //按下產生亂數
+        let btnR = document.querySelector('.random');
+        disabledButton();
+        btnR.onclick = function()
+        {
+            enableButton();
+            random_num = getRandom( 1 , 99 );
+            console.log(random_num);
+        };
+        
+        //產生出區間min~max的亂數函式
+        function getRandom( max , min )
+        {
+            return Math.floor(Math.random() * ( max - min + 1)) + min;
+        }
+        
+        let input = document.querySelector('.input');
+        let btns_number = document.querySelectorAll('.number');
+        btns_number.forEach(num => 
+        {
+            num.addEventListener("click",function()
+            {
+                addNum(num);
+            });
+        });
+
+        //數字鍵
+        function addNum(btn_num)
+        {
+            input.innerText += btn_num.innerText;
+        }
+        
+        //使用者輸入送出
+        let btn_sent = document.querySelector('.sent');
+        btn_sent.addEventListener("click",function()
+        {
+            checkAnswer();
+            input.innerText = "";
+        })
+
+        //鎖住數字鍵
+        function enableButton() 
+        {  
+            let en_btn= document.querySelectorAll('.num_button button');
+            en_btn.forEach(btn => 
+            {
+                btn.removeAttribute("disabled");
+            });
+            
+        }
+        function disabledButton() 
+        {  
+            let di_btn = document.querySelectorAll('.num_button button');
+            di_btn.forEach(btn =>
+            {
+                btn.setAttribute("disabled"," ");
+            });
+        }
+
+
+
+        //確認答案
+        function checkAnswer()
+        {
+            if(input.innerText == random_num)
+            {
+                alert(`猜中了! 遊戲結束`);
+                btn_initialize();
+                disabledButton();
+            }
+            else
+            {
+                changeRange( input.innerText );
+            }
+        }
+
+        //使用者猜的數字輸入改變區間
+        let range = document.querySelector('.range');
+        function changeRange( num )
+        {
+            if( num > random_num)
+            {
+                max = num;
+            }
+            else
+            {
+                min = num;
+            }
+            range.innerText = `${min}~${max}`;
+        }
+        
+        //清空輸入
+        let btn_clear = document.querySelector('.delet');
+        btn_clear.addEventListener("click",function()
+        {
+            input.innerText ="";
+        })
+
+        //初始化狀態
+        function btn_initialize()
+        {
+            random_num = 0;
+            range.innerText = `0~100`;
+        }
+    </script>
+</body>
+</html>

@@ -103,8 +103,10 @@
         disabledButton();
         btnR.onclick = function()
         {
+            btn_initialize();
             enableButton();
             random_num = getRandom( 1 , 99 );
+            disabled_btnR();
             console.log(random_num);
         };
         
@@ -146,8 +148,9 @@
             {
                 btn.removeAttribute("disabled");
             });
-            
         }
+        
+        //開啟數字鍵
         function disabledButton() 
         {  
             let di_btn = document.querySelectorAll('.num_button button');
@@ -156,7 +159,26 @@
                 btn.setAttribute("disabled"," ");
             });
         }
-
+        
+        //鎖住產生數字鍵
+        function disabled_btnR()
+        {
+            let di_btn = document.querySelectorAll('.random');
+            di_btn.forEach(btn =>
+            {
+                btn.setAttribute("disabled"," ");
+            });
+        }
+        
+        //開啟亂數產生鍵
+        function enable_btnR()
+        {
+            let di_btn = document.querySelectorAll('.random');
+            di_btn.forEach(btn =>
+            {
+                btn.removeAttribute("disabled"," ");
+            });
+        }
 
 
         //確認答案
@@ -167,6 +189,7 @@
                 alert(`猜中了! 遊戲結束`);
                 btn_initialize();
                 disabledButton();
+                enable_btnR();
             }
             else
             {

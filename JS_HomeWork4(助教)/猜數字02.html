@@ -31,6 +31,14 @@
         var Rn = [];
         let answer;
         let  btn_star = document.querySelector('.button_start');
+        let btn_answer = document.querySelector('.button_lookAnswer');
+        let btn_input = document.querySelector('.button_input');
+        let user_input = document.querySelector('.input_text');
+        let btn_rest = document.querySelector('.button_rest');
+
+        dis_input_btn();
+        dis_rest_btn();
+        dis_answer_btn();
 
         //開始遊戲
         btn_star.onclick = function()
@@ -43,17 +51,20 @@
                 get_Number( Rn , 4);
             }while(isCheck_repeat(Rn))
             dis_start_btn();
+            end_rest_btn();
+            end_input_btn();
+            end_answer_btn();
         }
 
         //看答案
-        let btn_answer = document.querySelector('.button_lookAnswer');
+        
         btn_answer.onclick = function()
         {
             alert(`答案是:${parseInt(Rn.join(''))}`);
         }
 
         //重新開始
-        let btn_rest = document.querySelector('.button_rest');
+        
         let ul = document.querySelector('.list-group');
         
         btn_rest.onclick = function ()
@@ -64,8 +75,6 @@
         }
 
         //使用者輸入,判斷幾A幾B
-        let btn_input = document.querySelector('.button_input');
-        let user_input = document.querySelector('.input_text');
         // console.log(btn_input);
         btn_input.onclick = function()
         {
@@ -190,7 +199,43 @@
         {
             btn_star.removeAttribute("disabled"," ");
         }
+
+        //關閉input button
+        function dis_input_btn()
+        {
+            btn_input.setAttribute("disabled"," ");
+        }
         
+        //開啟input button
+        function end_input_btn()
+        {
+            btn_input.removeAttribute("disabled"," ");
+        }
+        
+        //關閉rest button
+        function dis_rest_btn()
+        {
+            btn_rest.setAttribute("disabled"," ");
+        }
+        
+        //開啟rest button
+        function end_rest_btn()
+        {
+            btn_rest.removeAttribute("disabled"," ");
+        }
+
+        //關閉answer button
+        function dis_answer_btn()
+        {
+            btn_answer.setAttribute("disabled"," ");
+        }
+        
+        //開啟answer button
+        function end_answer_btn()
+        {
+            btn_answer.removeAttribute("disabled"," ");
+        }
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

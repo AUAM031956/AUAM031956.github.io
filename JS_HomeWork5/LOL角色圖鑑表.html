@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOL英雄聯盟</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <style>
+        .card {
+            border: 1px solid white;
+            margin-bottom: 30px;
+            overflow: hidden;
+            /* display: flex;
+            justify-content: space-between; */
+            width: 22rem;
+            padding: 21px;
+        }
+
+        .headshot {
+            overflow: hidden;
+        }
+
+        .card-title {
+            color: white;
+            background-color: black;
+            display: inline-block;
+            border-radius: 5px;
+            padding: 5px 15px 5px 15px;
+        }
+
+        .card-body {
+            background-color: #ffbf67;
+        }
+
+        .card:hover {
+            box-shadow: 8px 8px 15px #808080;
+            transform: translate(5px, 5px);
+        }
+
+        .card:hover img {
+            transform: scale(1.2);
+            transition: transform 0.5s;
+        }
+
+        .card:not(:hover) img {
+            transform: scale(1, 1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-body {
+            background-color: lightgreen !important;
+        }
+
+        .card:hover .card-title {
+            color: black;
+            background-color: white !important;
+        }
+        .modal-body img
+        {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='header'>
+        <div class='jumbotron bg-success'>
+            <h1>LOL Template</h1>
+        </div>
+        
+    </div>
+    <div class='row mx-5'>
+        <!-- <div class='container-fluid'> -->
+            <template id='cardLOL'>
+                    <div class="card" >
+                        <img src="" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text "></p>
+                            <button href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">詳細</a></button>
+                            <button href="#" class="btn btn-danger">影片</button>
+                        </div>
+                    </div>
+            </template>
+        <!-- </div> -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <img id="LOLImage">
+                        <h1 id="description" class="text-primary"></h1>
+                        <p class="p1"></p>
+                        <p class="p2"></p>
+                        <p class="p3"></p>
+                        <p class="p4"></p>
+                        <p class="p5"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script>
+        let championObject = {};
+        const championArray = [];
+        const jsonUrl = "https://raw.githubusercontent.com/AUAM031956/FileStorage/main/LOL_JSON";
+    </script>
+
+    <script type='module'>
+        import { $g } from './helpers.js';
+        let row = $g('.row');
+        let card = $g('#cardLOL');
+        
+        window.onload = function () {
+            let promise1 = fetchChampions(jsonUrl);
+            promise1
+            .catch(ex => 
+            {
+                console.log("網路JSON資料抓取錯誤 : " + ex);
+            })
+            .finally(() => 
+            {
+                console.log(promise1);
+            });
+            let promise2 = Promise.resolve(promise1);
+            promise2
+                .then(result => {
+                    championObject = result.data;
+                    //2.資料轉換Object > Array
+                    championObject = result.data
+                    DataTransformer(championObject, championArray);
+                })
+                .catch(ex => {
+                    console.log("資料轉換Object > Array錯誤 : " + ex);
+                });
+            
+                let promise3 = Promise.resolve(promise2);
+            promise3
+                .then(() => {
+                    genCard(championArray);
+                })
+                .catch(ex => {
+                    console.log("產生Card列表錯誤 : " + ex);
+                });
+        }
+        
+
+        function fetchChampions(url) {
+            const request = new Request(url);
+
+            return fetch(request).then(response => response.json())
+        }
+
+        function DataTransformer(championObject, championArray) {
+            //取得所有英雄名稱
+            let namesArray = Object.keys(championObject);
+            //debugger;
+            //將每筆英雄資料重建成Object, 並Push到championArray陣列子
+            namesArray.forEach((item, index) => {
+                championArray.push({
+                    name: item,
+                    chinesename:championObject[item].name,
+                    blurb: championObject[item].blurb,
+                    img: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${item}_0.jpg`,
+                    hp: championObject[item].stats.hp,
+                    movespeed: championObject[item].stats.movespeed,
+                    armor: championObject[item].stats.armor,
+                    spellblock: championObject[item].stats.spellblock,
+                    attackrange: championObject[item].stats.attackrange
+                });
+            });
+        }
+        //創建Card,Module
+        function genCard(championArray)
+        {
+            championArray.forEach(( item,index )=>
+            {
+                let cloneContent = card.content.cloneNode(true);
+                cloneContent.querySelector("h5").innerText = index + " : " + item.name +" - "+ item.chinesename;
+                cloneContent.querySelector("p").innerText = item.blurb;
+                cloneContent.querySelector("img").src = item.img;
+                cloneContent.querySelector(".btn").addEventListener("click",function ()
+                {
+                    let model = $g("#exampleModal");
+                    model.querySelector("h5").innerText = item.name+" - "+ item.chinesename;
+                    model.querySelector("#LOLImage").src = item.img;
+                    model.querySelector('.p1').innerText = "HP :" + item.hp;
+                    model.querySelector('.p2').innerText = "Move Speed :" + item.movespeed;
+                    model.querySelector('.p3').innerText = "Armor :" + item.armor;
+                    model.querySelector('.p4').innerText = "Spell Block :" + item.spellblock;
+                    model.querySelector('.p5').innerText = "AttackRange :" + item.attackrange;
+
+                });
+                    row.append(cloneContent);
+                })
+                
+        }
+    </script>
+</body>
+
+</html>

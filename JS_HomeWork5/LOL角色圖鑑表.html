@@ -16,7 +16,7 @@
             /* display: flex;
             justify-content: space-between; */
             width: 22rem;
-            padding: 21px;
+            padding: 0;
         }
 
         .headshot {
@@ -29,6 +29,14 @@
             display: inline-block;
             border-radius: 5px;
             padding: 5px 15px 5px 15px;
+        }
+
+        .card-text
+        {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
 
         .card-body {
@@ -72,8 +80,9 @@
         </div>
         
     </div>
-    <div class='row mx-5'>
-        <!-- <div class='container-fluid'> -->
+    <div class='container-fluid'>
+    <div class='row d-flex justify-content-between'>
+    
             <template id='cardLOL'>
                     <div class="card" >
                         <img src="" class="card-img-top" alt="...">
@@ -85,7 +94,7 @@
                         </div>
                     </div>
             </template>
-        <!-- </div> -->
+        </div>
     </div>
 
     <!-- Modal -->
@@ -131,7 +140,7 @@
     </script>
 
     <script type='module'>
-        import { $g } from './helpers.js';
+        import { $g } from './LOL/Modules/helpers.js';
         let row = $g('.row');
         let card = $g('#cardLOL');
         

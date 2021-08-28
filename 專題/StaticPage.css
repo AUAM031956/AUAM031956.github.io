@@ -2,12 +2,12 @@ html,body{
     height: 100%;
      /* background-color: azure;  */
 }
-.header{
+/* .header{
     height: 50px;
     position: absolute;
     top:0;
     z-index: 900;
-}
+} */
 .content{
     min-height: 100%;
 }

@@ -1,12 +1,12 @@
+/*固定content最小高度100%*/
 html,body{
     height: 100%;
      /* background-color: azure;  */
 }
 .content{
     min-height: 100%;
+    position:static;
 }
-
-
 a
 {
     color: black;
@@ -15,7 +15,8 @@ a
 a:hover
 {
     text-decoration: none;
-    background-color:#ffa042;
+    color:none;
+    /* background-color:#ffa042; */
 }
 .list-group li:hover
 {
@@ -26,7 +27,7 @@ a:hover
 }
 .list-group
 {
-    margin:20px 0 10px;
+    margin:40px 0 10px;
     flex-wrap: wrap;
     padding-left: 0;
     list-style: none;
@@ -37,13 +38,29 @@ h2,h3
     font-size:30px;
     color: #ffa042;
 }
+p
+{
+    text-align:left;
+    text-indent:2em;
+    padding-bottom:10px;
+}
 .Inside
 {
     font-size: 17px;
 }
+.Inside,.InsideList,p
+{
+    padding-top: 20px;
+    
+}
 .InsideList li 
 {
+    padding: 10px;
     list-style-type: decimal;
+}
+li
+{
+    list-style: none;
 }
 /* summary
 {
@@ -51,5 +68,5 @@ h2,h3
 } */
 .QuestionPage,.AboutPage,.ServePage
 {
-    margin:20px 0 10px;
+    margin:40px 0 10px;
 }

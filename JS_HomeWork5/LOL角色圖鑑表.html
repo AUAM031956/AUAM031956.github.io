@@ -9,19 +9,19 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <style>
-        
-        .bg-success{
+        .bg-success {
             background-image: url(/JS_HomeWork5/LOL_Background.jpg) !important;
-            background-position: bottom; 
-            background-size:cover;
-        }
-        body{
-            background-image: url(/JS_HomeWork5/LOL_Background.jpg);
-            background-position:  bottom top;
-            background-size:cover;
+            background-position: bottom;
+            background-size: cover;
         }
 
-        .bg-success h1{
+        body {
+            background-image: url(/JS_HomeWork5/LOL_Background.jpg);
+            background-position: bottom top;
+            background-size: cover;
+        }
+
+        .bg-success h1 {
             color: white !important;
         }
 
@@ -49,8 +49,7 @@
             padding: 5px 15px 5px 15px;
         }
 
-        .card-text
-        {
+        .card-text {
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -84,8 +83,8 @@
             color: white;
             /* background-color: white !important; */
         }
-        .modal-body img
-        {
+
+        .modal-body img {
             width: 100%;
         }
     </style>
@@ -96,21 +95,23 @@
         <div class='jumbotron bg-success'>
             <h1>LOL Template</h1>
         </div>
-        
+
     </div>
     <div class='container-fluid'>
-    <div class='row d-flex justify-content-between'>
-    
+        <div class='row d-flex justify-content-between'>
+
             <template id='cardLOL'>
-                    <div class="card" >
-                        <img src="" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text "></p>
-                            <button href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">詳細</a></button>
-                            <button href="#" class="btn btn-danger">影片</button>
-                        </div>
+                <div class="card">
+                    <img src="" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text "></p>
+                        <button href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                            id="detail">詳細</a></button>
+                        <!-- <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
+                            id="video">影片</button> -->
                     </div>
+                </div>
             </template>
         </div>
     </div>
@@ -127,13 +128,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <img id="LOLImage">
-                        <h1 id="description" class="text-primary"></h1>
-                        <p class="p1"></p>
-                        <p class="p2"></p>
-                        <p class="p3"></p>
-                        <p class="p4"></p>
-                        <p class="p5"></p>
+                    <img id="LOLImage">
+                    <h1 id="description" class="text-primary"></h1>
+                    <p class="p1"></p>
+                    <p class="p2"></p>
+                    <p class="p3"></p>
+                    <p class="p4"></p>
+                    <p class="p5"></p>
+                    <!-- <iframe src="https://openload.co/embed/rSArHXbt8Ss/" scrolling="no" frameborder="0"
+                        width="100%" height="430" allowfullscreen="true" webkitallowfullscreen="true"
+                        mozallowfullscreen="true"></iframe> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -143,14 +147,14 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+        </script>
     <script>
         let championObject = {};
         const championArray = [];
@@ -161,18 +165,16 @@
         import { $g } from 'https://auam031956.github.io/JS_HomeWork5/helpers.js';
         let row = $g('.row');
         let card = $g('#cardLOL');
-        
+
         window.onload = function () {
             let promise1 = fetchChampions(jsonUrl);
             promise1
-            .catch(ex => 
-            {
-                console.log("網路JSON資料抓取錯誤 : " + ex);
-            })
-            .finally(() => 
-            {
-                console.log(promise1);
-            });
+                .catch(ex => {
+                    console.log("網路JSON資料抓取錯誤 : " + ex);
+                })
+                .finally(() => {
+                    console.log(promise1);
+                });
             let promise2 = Promise.resolve(promise1);
             promise2
                 .then(result => {
@@ -184,8 +186,8 @@
                 .catch(ex => {
                     console.log("資料轉換Object > Array錯誤 : " + ex);
                 });
-            
-                let promise3 = Promise.resolve(promise2);
+
+            let promise3 = Promise.resolve(promise2);
             promise3
                 .then(() => {
                     genCard(championArray);
@@ -194,7 +196,7 @@
                     console.log("產生Card列表錯誤 : " + ex);
                 });
         }
-        
+
 
         function fetchChampions(url) {
             const request = new Request(url);
@@ -210,7 +212,7 @@
             namesArray.forEach((item, index) => {
                 championArray.push({
                     name: item,
-                    chinesename:championObject[item].name,
+                    chinesename: championObject[item].name,
                     blurb: championObject[item].blurb,
                     img: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${item}_0.jpg`,
                     hp: championObject[item].stats.hp,
@@ -222,29 +224,27 @@
             });
         }
         //創建Card,Module
-        function genCard(championArray)
-        {
-            championArray.forEach(( item,index )=>
-            {
+        function genCard(championArray) {
+            championArray.forEach((item, index) => {
                 let cloneContent = card.content.cloneNode(true);
-                cloneContent.querySelector("h5").innerText = index + " : " + item.name +" - "+ item.chinesename;
+                cloneContent.querySelector("h5").innerText = index + " : " + item.name + " - " + item.chinesename;
                 cloneContent.querySelector("p").innerText = item.blurb;
                 cloneContent.querySelector("img").src = item.img;
-                cloneContent.querySelector(".btn").addEventListener("click",function ()
-                {
+                cloneContent.querySelector("#detail").addEventListener("click", function () {
                     let model = $g("#exampleModal");
-                    model.querySelector("h5").innerText = item.name+" - "+ item.chinesename;
+                    model.querySelector("h5").innerText = item.name + " - " + item.chinesename;
                     model.querySelector("#LOLImage").src = item.img;
                     model.querySelector('.p1').innerText = "HP :" + item.hp;
                     model.querySelector('.p2').innerText = "Move Speed :" + item.movespeed;
                     model.querySelector('.p3').innerText = "Armor :" + item.armor;
                     model.querySelector('.p4').innerText = "Spell Block :" + item.spellblock;
                     model.querySelector('.p5').innerText = "AttackRange :" + item.attackrange;
-
+                    model.querySelector("iframe").setAttribute("class", "disable");
                 });
-                    row.append(cloneContent);
-                })
-                
+
+                row.append(cloneContent);
+            })
+
         }
     </script>
 </body>

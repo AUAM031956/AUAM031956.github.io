@@ -10,7 +10,7 @@
 }
 
 .header {
-    background-image: url(/AUAM031956.github.io/HomeWork3/shopline/original-pg.png);
+    background-image: url(/shopline/original-pg.png);
     background-position: top center;
     background-size: cover;
     position: fixed;
@@ -116,7 +116,7 @@ button {
 .banner {
     margin-top: 100px;
     width: 100%;
-    background-image: url(/AUAM031956.github.io/HomeWork3/shopline/original-pg.png);
+    background-image: url(/shopline/original-pg.png);
     display: flex;
     background-position: center center;
     background-size: cover;
@@ -337,7 +337,7 @@ button {
 }
 
 .container-fuild {
-    background-image: url(/AUAM031956.github.io/HomeWork3/shopline/bottombanner.png);
+    background-image: url(/shopline/original-pg.png);
     background-position: left right;
     background-size: cover;
     height: 300px;

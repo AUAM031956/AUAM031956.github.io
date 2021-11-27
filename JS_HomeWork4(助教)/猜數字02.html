@@ -1,36 +1,39 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>猜數字02</title>
-    
+
 </head>
-<body>   
+
+<body>
     <div class="container">
         <div class="row mt-3">
             <div class="btn-group" role="group">
-                <button class="btn btn-outline-primary button_start" >開始</button>
-                <button class="btn btn-outline-primary button_rest" >放棄重來</button>
-                <button class="btn btn-outline-primary button_lookAnswer" >看答案</button>
+                <button class="btn btn-outline-primary button_start">開始</button>
+                <button class="btn btn-outline-primary button_rest">放棄重來</button>
+                <button class="btn btn-outline-primary button_lookAnswer">看答案</button>
             </div>
         </div>
         <br>
         <ul class="list-group"></ul>
         <div class="input-group mb-3">
             <span class="input-group-text">猜答案</span>
-            <input type="text" class="form-control input_text" >
-            <button class="btn btn-outline-secondary button_input" type="button" >猜!</button>
+            <input type="text" class="form-control input_text">
+            <button class="btn btn-outline-secondary button_input" type="button">猜!</button>
         </div>
     </div>
 
     <script>
         var Rn = [];
         let answer;
-        let  btn_star = document.querySelector('.button_start');
+        let btn_star = document.querySelector('.button_start');
         let btn_answer = document.querySelector('.button_lookAnswer');
         let btn_input = document.querySelector('.button_input');
         let user_input = document.querySelector('.input_text');
@@ -41,15 +44,14 @@
         dis_answer_btn();
 
         //開始遊戲
-        btn_star.onclick = function()
-        {
-            do{
+        btn_star.onclick = function () {
+            do {
                 // for(let i=0;i<4;i++)
                 // {
                 //     Rn[i] = get_Number();
                 // }
-                get_Number( Rn , 4);
-            }while(isCheck_repeat(Rn))
+                get_Number(Rn, 4);
+            } while (isCheck_repeat(Rn))
             dis_start_btn();
             end_rest_btn();
             end_input_btn();
@@ -57,18 +59,14 @@
         }
 
         //看答案
-        
-        btn_answer.onclick = function()
-        {
+        btn_answer.onclick = function () {
             alert(`答案是:${parseInt(Rn.join(''))}`);
         }
 
         //重新開始
-        
         let ul = document.querySelector('.list-group');
-        
-        btn_rest.onclick = function ()
-        {
+
+        btn_rest.onclick = function () {
             ul.innerHTML = "";
             Rn = [];
             end_start_btn();
@@ -76,48 +74,51 @@
 
         //使用者輸入,判斷幾A幾B
         // console.log(btn_input);
-        btn_input.onclick = function()
-        {
+        btn_input.onclick = function () {
             let user_number = user_input.value.split("");
-            if(isNotANumber(user_number , user_input.leght ))
-            {
-                Result(Rn , user_number);
+            if (isNotANumber(user_number, user_input.leght)) {
+                if (ischeckUser_number(user_number) == true) {
+                    Result(Rn, user_number);
+                }
+                else{
+                    alert("請重新輸入，有重複數字……");
+                }
             }
         }
-        
+
+        function ischeckUser_number(n) {
+            let ans = true;
+            if (n[0] == n[1] || n[0] == n[2] || n[0] == n[3] || n[1] == n[2] || n[1] == n[3] || n[2] == n[3] || n[0] ==
+                0) {
+                ans = false;
+            }
+            return ans;
+        }
+
         //判斷使用者輸入是數字
-        function isNotANumber(input_Data , input_lenght) 
-        { 
-        　　if (parseFloat(input_Data).toString() == "NaN")
-            { 
-        　　　　alert("請輸入數字……");
-        　　　　return false; 
-        　　}
-            else 
-            { 
-        　　　　return true; 
-        　　} 
+        function isNotANumber(input_Data, input_lenght) {
+            if (parseFloat(input_Data).toString() == "NaN") {
+                alert("請輸入數字……");
+                return false;
+            } else {
+                return true;
+            }
             console.log(inputData_leght);
         }
 
-
-
         //產生四個亂數
-        function get_Number( Rn , n)
-        {
-            for(let i=0;i<n;i++)
-            {
-                Rn[i] = Math.floor(Math.random()*10);
+        function get_Number(Rn, n) {
+            for (let i = 0; i < n; i++) {
+                Rn[i] = Math.floor(Math.random() * 10);
             }
             return Rn;
         }
 
         //判斷亂數不重複且第一位不等於0
-        function isCheck_repeat(n)
-        {
-            var ans =false;
-            if(n[0]==n[1] || n[0]==n[2] || n[0]==n[3] || n[1]==n[2] || n[1]==n[3] || n[2]==n[3] || n[0]==0 )
-            {
+        function isCheck_repeat(n) {
+            var ans = false;
+            if (n[0] == n[1] || n[0] == n[2] || n[0] == n[3] || n[1] == n[2] || n[1] == n[3] || n[2] == n[3] || n[0] ==
+                0) {
                 ans = true;
             }
             //檢查長度
@@ -126,120 +127,105 @@
         }
 
         //判斷幾A幾B
-        function Result(Rn , user_number)
-        {
-            var numberOfA =0 , numberOfB = 0;
+        function Result(Rn, user_number) {
+            let numberOfA = 0,
+                numberOfB = 0;
 
-            if(user_number[0] == Rn[0])
-            {
+            if (user_number[0] == Rn[0]) {
                 numberOfA++;
             }
-            if(user_number[1] == Rn[1])
-            {
+            if (user_number[1] == Rn[1]) {
                 numberOfA++;
             }
-            if(user_number[2] == Rn[2])
-            {
+            if (user_number[2] == Rn[2]) {
                 numberOfA++;
             }
-            if(user_number[3] == Rn[3])
-            {
+            if (user_number[3] == Rn[3]) {
                 numberOfA++;
             }
-            if(user_number[0] == Rn[1] || user_number[0] == Rn[2] || user_number[0] == Rn[3])
-            {
+            if (user_number[0] == Rn[1] || user_number[0] == Rn[2] || user_number[0] == Rn[3]) {
                 numberOfB++;
             }
-            if(user_number[1] == Rn[0] || user_number[1] == Rn[2] || user_number[1] == Rn[3])
-            {
+            if (user_number[1] == Rn[0] || user_number[1] == Rn[2] || user_number[1] == Rn[3]) {
                 numberOfB++;
             }
-            if(user_number[2] == Rn[0] || user_number[2] == Rn[1] || user_number[2] == Rn[3])
-            {
+            if (user_number[2] == Rn[0] || user_number[2] == Rn[1] || user_number[2] == Rn[3]) {
                 numberOfB++;
             }
-            if(user_number[3] == Rn[0] || user_number[3] == Rn[1] || user_number[3] == Rn[2])
-            {
+            if (user_number[3] == Rn[0] || user_number[3] == Rn[1] || user_number[3] == Rn[2]) {
                 numberOfB++;
             }
-            display( numberOfA , numberOfB , user_number );
+
+            display(numberOfA, numberOfB, user_number);
         }
 
 
         //顯示的boots5.0 Badges:badge bg-success  badge bg-danger 顏色控制
-        function display( numberOfA , numberOfB , user_number )
-        {
+        function display(numberOfA, numberOfB, user_number) {
             let li = document.createElement('li');
 
             let span = document.createElement('span');
 
             span.classList = "badge bg-danger";
-            
-            if(numberOfA == 4)
-            {
+
+            if (numberOfA == 4) {
                 span.classList = "badge bg-success";
             }
-            span.innerHTML +=` ${numberOfA}A${numberOfB}B `;
+            span.innerHTML += ` ${numberOfA}A${numberOfB}B `;
             li.append(span);
 
             li.classList = "list-group-item";
             li.innerHTML += ` ${parseInt(user_number.join(""))} `;
             ul.append(li);
-            
+
         }
 
         //關閉start button
-        function dis_start_btn()
-        {
-            btn_star.setAttribute("disabled"," ");
+        function dis_start_btn() {
+            btn_star.setAttribute("disabled", " ");
         }
-        
+
         //開啟start button
-        function end_start_btn()
-        {
-            btn_star.removeAttribute("disabled"," ");
+        function end_start_btn() {
+            btn_star.removeAttribute("disabled", " ");
         }
 
         //關閉input button
-        function dis_input_btn()
-        {
-            btn_input.setAttribute("disabled"," ");
+        function dis_input_btn() {
+            btn_input.setAttribute("disabled", " ");
         }
-        
+
         //開啟input button
-        function end_input_btn()
-        {
-            btn_input.removeAttribute("disabled"," ");
+        function end_input_btn() {
+            btn_input.removeAttribute("disabled", " ");
         }
-        
+
         //關閉rest button
-        function dis_rest_btn()
-        {
-            btn_rest.setAttribute("disabled"," ");
+        function dis_rest_btn() {
+            btn_rest.setAttribute("disabled", " ");
         }
-        
+
         //開啟rest button
-        function end_rest_btn()
-        {
-            btn_rest.removeAttribute("disabled"," ");
+        function end_rest_btn() {
+            btn_rest.removeAttribute("disabled", " ");
         }
 
         //關閉answer button
-        function dis_answer_btn()
-        {
-            btn_answer.setAttribute("disabled"," ");
-        }
-        
-        //開啟answer button
-        function end_answer_btn()
-        {
-            btn_answer.removeAttribute("disabled"," ");
+        function dis_answer_btn() {
+            btn_answer.setAttribute("disabled", " ");
         }
 
+        //開啟answer button
+        function end_answer_btn() {
+            btn_answer.removeAttribute("disabled", " ");
+        }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
-    
+
 </body>
+
 </html>
